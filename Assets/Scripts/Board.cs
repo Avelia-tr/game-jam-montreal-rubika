@@ -1,22 +1,50 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public class Board : MonoBehaviour
 {
     // get input and do logic
 
-    Vector2Int PlayerPosition;
+    public Vector2Int PlayerPosition;
 
-    bool PlayerDead = false;
+    public bool PlayerDead = false;
 
-    Vector2Int direction;
-    Vector2Int[] Boxes;
+    public Vector2Int direction;
+    public Vector2Int[] Boxes;
 
-    Tiles[][] tiles;
+    public Tiles[][] tiles;
+
+    public Dictionary<Vector2Int, Tiles> tiles2;
+
+
+    public delegate void eventsTick();
+    public event eventsTick ticks;
+
+    // replace those data with the actual objects ?
+    // with maybe a hashTable on Vector2Int
 
     void Start()
     {
+        var query = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ILogicComponents>().ToArray();
+
+        foreach (var entities in query)
+        {
+            switch (entities)
+            {
+                case IPlayer player:
+                    break;
+                case IBox box:
+                    break;
+                case IWall wall:
+                    break;
+                case IGoal goal:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public void Move(Vector2Int move)
@@ -24,6 +52,7 @@ public class Board : MonoBehaviour
         if (PlayerDead) return;
         MoveLogic(move);
         // ticks ?
+        ticks.Invoke();
         direction = move;
     }
 
@@ -64,6 +93,7 @@ public class Board : MonoBehaviour
         PlayerDead = DeathCheck();
         // raise tick event ?
 
+        ticks.Invoke();
         // winCheck
     }
     public void PullLogic()
@@ -98,7 +128,7 @@ public class Board : MonoBehaviour
     }
 }
 
-enum Tiles
+public enum Tiles
 {
     None,
     Wall,

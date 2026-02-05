@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPlayer
 {
-    [SerializeReference]
-    Board board;
+    public Board board { get; set; }
 
     void Start() { }
 
