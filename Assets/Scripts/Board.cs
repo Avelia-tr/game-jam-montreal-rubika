@@ -31,6 +31,8 @@ public class Board : MonoBehaviour
     {
         var newPosition = PlayerPosition + move;
 
+        if (tiles[newPosition.x][newPosition.y] == Tiles.Wall) return;
+
         var boxCheck = IsBoxIn(newPosition);
 
         if (boxCheck is null)
