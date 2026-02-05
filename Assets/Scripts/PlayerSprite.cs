@@ -1,10 +1,19 @@
 using UnityEngine;
 
-public class PlayerSprite : MonoBehaviour
+public class PlayerSprite : MonoBehaviour, IPlayer
 {
-    public Board board;
+    public Board board { get; set; }
+    public Vector2Int Position { get; set; }
 
-    void Start() { }
+    void Awake()
+    {
+        Position = new(((int)transform.position.x), ((int)transform.position.y));
+    }
+
+    void Start()
+    {
+        board.ticks += UpdatePosition;
+    }
 
     void Update() { }
 

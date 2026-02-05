@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IPlayer
+public class PlayerController : MonoBehaviour
 {
-    public Board board { get; set; }
+    public Board board;
 
     void Start() { }
 

@@ -3,8 +3,17 @@ using UnityEngine;
 public class BoxSprite : MonoBehaviour, IBox
 {
     public Board board { get; set; }
+    public Vector2Int Position { get; set; }
 
-    void Start() { }
+    void Awake()
+    {
+        Position = new(((int)transform.position.x), ((int)transform.position.y));
+    }
+
+    void Start()
+    {
+        board.ticks += UpdatePosition;
+    }
 
     void Update() { }
 
@@ -13,7 +22,7 @@ public class BoxSprite : MonoBehaviour, IBox
         //Do Animation/Tween ?
         //
 
-        var newPosition = new Vector3(board.PlayerPosition.x, transform.position.y, board.PlayerPosition.y);
+        var newPosition = new Vector3(Position.x, transform.position.y, Position.y);
 
         transform.position = newPosition;
     }

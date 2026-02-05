@@ -1,19 +1,26 @@
-interface ILogicComponents { }
+using UnityEngine;
 
-interface IBox : ILogicComponents
+public interface ILogicComponents
 {
-    public Board board { get; set; }
+    public Vector2Int Position { get; }
 }
 
-interface IPlayer : ILogicComponents
+public interface IBox : ILogicComponents
 {
     public Board board { get; set; }
+    new public Vector2Int Position { get; set; }
 }
 
-interface IWind : ILogicComponents { }
+public interface IPlayer : ILogicComponents
+{
+    public Board board { get; set; }
+    new public Vector2Int Position { get; set; }
+}
 
-interface ITile : ILogicComponents { }
+public interface IWind : ILogicComponents { }
 
-interface IGoal : ITile { }
-interface IWall : ITile { }
-interface INone : ITile { }
+public interface ITile : ILogicComponents { }
+
+public interface IGoal : ITile { }
+public interface IWall : ITile { }
+public interface INone : ITile { }

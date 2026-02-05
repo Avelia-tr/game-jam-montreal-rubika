@@ -8,15 +8,14 @@ public class Board : MonoBehaviour
     // get input and do logic
 
     public Vector2Int PlayerPosition;
+    public IPlayer player;
 
     public bool PlayerDead = false;
 
     public Vector2Int direction;
-    public Vector2Int[] Boxes;
+    public IBox[] Boxes;
 
-    public Tiles[][] tiles;
-
-    public Dictionary<Vector2Int, Tiles> tiles2;
+    public Dictionary<Vector2Int, Tiles> tiles;
 
 
     public delegate void eventsTick();
@@ -25,26 +24,9 @@ public class Board : MonoBehaviour
     // replace those data with the actual objects ?
     // with maybe a hashTable on Vector2Int
 
-    void Start()
+    void OnEnable()
     {
-        var query = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ILogicComponents>().ToArray();
-
-        foreach (var entities in query)
-        {
-            switch (entities)
-            {
-                case IPlayer player:
-                    break;
-                case IBox box:
-                    break;
-                case IWall wall:
-                    break;
-                case IGoal goal:
-                    break;
-                default:
-                    break;
-            }
-        }
+        SetUpData();
     }
 
     public void Move(Vector2Int move)
@@ -60,7 +42,7 @@ public class Board : MonoBehaviour
     {
         var newPosition = PlayerPosition + move;
 
-        if (tiles[newPosition.x][newPosition.y] == Tiles.Wall) return;
+        if (CheckTileAt(newPosition, Tiles.Wall)) return;
 
         var boxCheck = IsBoxIn(newPosition);
 
@@ -73,7 +55,7 @@ public class Board : MonoBehaviour
 
         var newBoxPosition = newPosition + move;
 
-        if (tiles[newBoxPosition.x][newBoxPosition.y] == Tiles.Wall)
+        if (CheckTileAt(newBoxPosition, Tiles.Wall))
         {
             // we cannot do the movement so everything stops
             return;
@@ -81,7 +63,7 @@ public class Board : MonoBehaviour
 
         // pushevent anim ?
 
-        Boxes[boxCheck.Value] = newBoxPosition;
+        Boxes[boxCheck.Value].Position = newBoxPosition;
         PlayerPosition = newPosition;
     }
 
@@ -109,23 +91,63 @@ public class Board : MonoBehaviour
             return;
         }
 
-        PlayerPosition -= direction;
-        Boxes[boxCheck.Value] = PlayerPosition;
+        player.Position -= direction;
+        Boxes[boxCheck.Value].Position = PlayerPosition;
     }
 
     bool DeathCheck() { throw new NotImplementedException(); }
 
     bool WinCheck() { throw new NotImplementedException(); }
 
+    bool CheckTileAt(Vector2Int position, Tiles type)
+    {
+        Tiles ToTest = Tiles.None;
+        return tiles.TryGetValue(position, out ToTest) && ToTest == type;
+    }
+
     int? IsBoxIn(Vector2Int position)
     {
         for (int i = 0; i < Boxes.Length; i++)
         {
-            if (Boxes[i] == position) return i;
+            if (Boxes[i].Position == position) return i;
         }
 
         return null;
     }
+
+    void SetUpData()
+    {
+        var query = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ILogicComponents>().ToArray();
+
+        tiles = new();
+        var lboxes = new List<IBox>();
+
+        foreach (var entities in query)
+        {
+            switch (entities)
+            {
+                case IPlayer lplayer:
+                    player.board = this;
+                    player = lplayer;
+                    break;
+                case IBox box:
+                    box.board = this;
+                    lboxes.Add(box);
+                    break;
+                case IWall:
+                    tiles.Add(entities.Position, Tiles.Wall);
+                    break;
+                case IGoal:
+                    tiles.Add(entities.Position, Tiles.Targets);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        Boxes = lboxes.ToArray();
+    }
+
 }
 
 public enum Tiles
