@@ -7,7 +7,7 @@ public class BoxSprite : MonoBehaviour, IBox
 
     void Awake()
     {
-        Position = new(((int)transform.position.x), ((int)transform.position.y));
+        Position = new(((int)transform.position.x), ((int)transform.position.z));
     }
 
     void Start()
