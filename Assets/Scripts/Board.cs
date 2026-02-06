@@ -127,8 +127,8 @@ public class Board : MonoBehaviour
             switch (entities)
             {
                 case IPlayer lplayer:
-                    player.board = this;
                     player = lplayer;
+                    player.board = this;
                     break;
                 case IBox box:
                     box.board = this;
