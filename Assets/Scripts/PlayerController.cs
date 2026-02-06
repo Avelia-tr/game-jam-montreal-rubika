@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     private void OnMove(InputValue _input)
     {
         var input = _input.Get<Vector2>();
+
+        if (input.x == 0 && input.y == 0) return;
+
         board.Move(new(Mathf.RoundToInt(input.x), Mathf.RoundToInt(input.y)));
 
         //automatize input on hold

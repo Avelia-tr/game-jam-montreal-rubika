@@ -22,7 +22,7 @@ public class PlayerSprite : MonoBehaviour, IPlayer
         //Do Animation/Tween ?
         //
 
-        var newPosition = new Vector3(board.PlayerPosition.x, transform.position.y, board.PlayerPosition.y);
+        var newPosition = new Vector3(Position.x, transform.position.y, Position.y);
 
         transform.position = newPosition;
     }

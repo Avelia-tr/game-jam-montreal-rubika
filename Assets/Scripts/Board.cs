@@ -7,7 +7,6 @@ public class Board : MonoBehaviour
 {
     // get input and do logic
 
-    public Vector2Int PlayerPosition;
     public IPlayer player;
 
     public bool PlayerDead = false;
@@ -40,7 +39,7 @@ public class Board : MonoBehaviour
 
     public void MoveLogic(Vector2Int move)
     {
-        var newPosition = PlayerPosition + move;
+        var newPosition = player.Position + move;
 
         if (CheckTileAt(newPosition, Tiles.Wall)) return;
 
@@ -48,7 +47,7 @@ public class Board : MonoBehaviour
 
         if (boxCheck is null)
         {
-            PlayerPosition = newPosition;
+            player.Position = newPosition;
             // Move Anim event ?
             return;
         }
@@ -64,7 +63,13 @@ public class Board : MonoBehaviour
         // pushevent anim ?
 
         Boxes[boxCheck.Value].Position = newBoxPosition;
-        PlayerPosition = newPosition;
+        player.Position = newPosition;
+
+        if (WinCheck())
+        {
+            PlayerDead = true;
+            print("WINNNNNNNNNNNNNN");
+        }
     }
 
     public void Pull()
@@ -77,10 +82,17 @@ public class Board : MonoBehaviour
 
         ticks.Invoke();
         // winCheck
+        //
+
+        if (WinCheck())
+        {
+            PlayerDead = true;
+            print("WINNNNNNNNNNNNNN");
+        }
     }
     public void PullLogic()
     {
-        var boxToPull = PlayerPosition + direction;
+        var boxToPull = player.Position + direction;
 
         var boxCheck = IsBoxIn(boxToPull);
 
@@ -91,13 +103,13 @@ public class Board : MonoBehaviour
             return;
         }
 
+        Boxes[boxCheck.Value].Position = player.Position;
         player.Position -= direction;
-        Boxes[boxCheck.Value].Position = PlayerPosition;
     }
 
-    bool DeathCheck() { throw new NotImplementedException(); }
+    bool DeathCheck() => Boxes.Any(a => a.Position == player.Position);
 
-    bool WinCheck() { throw new NotImplementedException(); }
+    bool WinCheck() => Boxes.All(a => CheckTileAt(a.Position, Tiles.Targets));
 
     bool CheckTileAt(Vector2Int position, Tiles type)
     {
