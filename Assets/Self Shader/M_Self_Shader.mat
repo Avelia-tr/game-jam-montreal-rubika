@@ -93,32 +93,32 @@ Material:
     - _BaseColor: 0
     - _FresnelScale: 0.328
     - _NbrShadowLayer: 4
-    - _PatternDensity: 3
-    - _PatternDensity_1: 4.97
+    - _PatternDensity: 14.2
+    - _PatternDensity_1: 1
     - _PatternDensity_2: 8.5
-    - _PatternDensity_3: 2.39
+    - _PatternDensity_3: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _SelfEdge: 0.483
+    - _SelfEdge: 0
     - _SelfEdge_1: 0.731
     - _SelfEdge_2: 1.568
     - _SelfEdge_3: 0.69
-    - _SelfOffset: 0.288
-    - _SelfOffset_1: 0.377
-    - _SelfOffset_2: 1.126
-    - _SelfOffset_3: 1
-    - _SelfThreshold: 0.0414
-    - _SelfThreshold_1: 0.0884
-    - _SelfThreshold_2: 0.1
-    - _SelfThreshold_3: 0.1
+    - _SelfOffset: 0
+    - _SelfOffset_1: 0
+    - _SelfOffset_2: 0
+    - _SelfOffset_3: 0
+    - _SelfThreshold: 0.01
+    - _SelfThreshold_1: 0.01
+    - _SelfThreshold_2: 0.01
+    - _SelfThreshold_3: 0.01
     - _Smoothness: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _FresnelColor: {r: 0.5660378, g: 0.356642, b: 0.2803489, a: 1}
-    - _PatternColor: {r: 0, g: 1, b: 0.028149843, a: 1}
-    - _PatternColor_1: {r: 1, g: 0.072128005, b: 0, a: 1}
-    - _PatternColor_2: {r: 1, g: 0.9400101, b: 0, a: 1}
-    - _PatternColor_3: {r: 0, g: 0.5758867, b: 1, a: 1}
+    - _PatternColor: {r: 1, g: 1, b: 1, a: 1}
+    - _PatternColor_1: {r: 1, g: 1, b: 1, a: 1}
+    - _PatternColor_2: {r: 1, g: 1, b: 1, a: 1}
+    - _PatternColor_3: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2562748000015819529
