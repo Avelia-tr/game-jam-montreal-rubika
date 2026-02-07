@@ -37,7 +37,7 @@ public class Board : MonoBehaviour
         if (PlayerDead) return;
         MoveLogic(move);
         // ticks ?
-        ticks.Invoke();
+        ticks?.Invoke();
         direction = move;
 
         if (WinCheck())
@@ -59,7 +59,7 @@ public class Board : MonoBehaviour
         if (boxCheck is null)
         {
             player.Position = newPosition;
-            OnPlayerMove.Invoke();
+            OnPlayerMove?.Invoke();
             return;
         }
 
@@ -71,7 +71,7 @@ public class Board : MonoBehaviour
             return;
         }
 
-        OnPlayerPush.Invoke();
+        OnPlayerPush?.Invoke();
 
         Boxes[boxCheck.Value].Position = newBoxPosition;
         player.Position = newPosition;
@@ -86,7 +86,7 @@ public class Board : MonoBehaviour
         PlayerDead = DeathCheck();
         // raise tick event ?
 
-        ticks.Invoke();
+        ticks?.Invoke();
         // winCheck
         //
 
@@ -109,7 +109,7 @@ public class Board : MonoBehaviour
             return;
         }
 
-        OnPlayerPull.Invoke();
+        OnPlayerPull?.Invoke();
 
         Boxes[boxCheck.Value].Position = player.Position;
         player.Position -= direction;
