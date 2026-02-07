@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,8 @@ using System.Linq;
 public class Board : MonoBehaviour
 {
     // get input and do logic
+
+    public const string SCENE_UI = "UI";
 
     public IPlayer player;
 
@@ -23,6 +26,8 @@ public class Board : MonoBehaviour
     public event eventsTick OnPlayerPush;
     public event eventsTick OnPlayerPull;
     public event eventsTick OnPlayerMove;
+    public event eventsTick OnPlayerWin;
+    public event eventsTick OnPlayerLoose;
 
     // replace those data with the actual objects ?
     // with maybe a hashTable on Vector2Int
@@ -30,6 +35,8 @@ public class Board : MonoBehaviour
     void OnEnable()
     {
         SetUpData();
+
+        SceneManager.LoadScene(SCENE_UI, LoadSceneMode.Additive);
     }
 
     public void Move(Vector2Int move)
@@ -44,6 +51,7 @@ public class Board : MonoBehaviour
         {
             PlayerDead = true;
             print("WINNNNNNNNNNNNNN");
+            OnPlayerWin?.Invoke();
         }
 
     }
@@ -94,7 +102,10 @@ public class Board : MonoBehaviour
         {
             PlayerDead = true;
             print("WINNNNNNNNNNNNNN");
+            OnPlayerWin?.Invoke();
         }
+
+        if (PlayerDead) OnPlayerDeath?.Invoke();
     }
     public void PullLogic()
     {
