@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 259000632}
   - component: {fileID: 259000631}
   m_Layer: 5
-  m_Name: Button
+  m_Name: levelSelect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1447,6 +1447,7 @@ GameObject:
   - component: {fileID: 911377675}
   - component: {fileID: 911377674}
   - component: {fileID: 911377673}
+  - component: {fileID: 911377677}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1538,6 +1539,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &911377677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911377672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0adea1fdafa30f97b987324c18658905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  exit: {fileID: 936851414}
+  levelSelect: {fileID: 259000631}
+  backButton: {fileID: 0}
+  levelSelectScreen: {fileID: 709691371}
+  TitleScreen: {fileID: 1893531528}
 --- !u!1 &923843205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1799,7 +1817,7 @@ GameObject:
   - component: {fileID: 936851415}
   - component: {fileID: 936851414}
   m_Layer: 5
-  m_Name: Button
+  m_Name: exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
