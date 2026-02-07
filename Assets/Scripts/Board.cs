@@ -19,6 +19,10 @@ public class Board : MonoBehaviour
 
     public delegate void eventsTick();
     public event eventsTick ticks;
+    public event eventsTick OnPlayerDeath;
+    public event eventsTick OnPlayerPush;
+    public event eventsTick OnPlayerPull;
+    public event eventsTick OnPlayerMove;
 
     // replace those data with the actual objects ?
     // with maybe a hashTable on Vector2Int
@@ -35,6 +39,13 @@ public class Board : MonoBehaviour
         // ticks ?
         ticks.Invoke();
         direction = move;
+
+        if (WinCheck())
+        {
+            PlayerDead = true;
+            print("WINNNNNNNNNNNNNN");
+        }
+
     }
 
     public void MoveLogic(Vector2Int move)
@@ -48,7 +59,7 @@ public class Board : MonoBehaviour
         if (boxCheck is null)
         {
             player.Position = newPosition;
-            // Move Anim event ?
+            OnPlayerMove.Invoke();
             return;
         }
 
@@ -60,16 +71,11 @@ public class Board : MonoBehaviour
             return;
         }
 
-        // pushevent anim ?
+        OnPlayerPush.Invoke();
 
         Boxes[boxCheck.Value].Position = newBoxPosition;
         player.Position = newPosition;
 
-        if (WinCheck())
-        {
-            PlayerDead = true;
-            print("WINNNNNNNNNNNNNN");
-        }
     }
 
     public void Pull()
@@ -103,11 +109,13 @@ public class Board : MonoBehaviour
             return;
         }
 
+        OnPlayerPull.Invoke();
+
         Boxes[boxCheck.Value].Position = player.Position;
         player.Position -= direction;
     }
 
-    bool DeathCheck() => Boxes.Any(a => a.Position == player.Position);
+    bool DeathCheck() => Boxes.Any(a => a.Position == player.Position) || CheckTileAt(player.Position, Tiles.Wall);
 
     bool WinCheck() => Boxes.All(a => CheckTileAt(a.Position, Tiles.Targets));
 

@@ -26,4 +26,9 @@ public class PlayerSprite : MonoBehaviour, IPlayer
 
         transform.position = newPosition;
     }
+
+    void Die()
+    {
+        Debug.Log("Ouch am dead");
+    }
 }
